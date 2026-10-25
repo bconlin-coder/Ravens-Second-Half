@@ -1,0 +1,202 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Can you hold the lead? | Ravens coaching simulator</title><meta name="description" content="Coach Baltimore through the second half. Every call has a consequence."><style>
+:root{color-scheme:light;--purple:#35205a;--muted:#67646d;--line:#dedce2}*{box-sizing:border-box}body{margin:0;background:#fafafa;color:#24212a;font:16px Arial,Helvetica,sans-serif;line-height:1.5}button,select{font:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible{outline:3px solid #9674c1;outline-offset:3px}.wrap{max-width:1000px;margin:auto;padding:28px 30px}header{padding-bottom:15px;border-bottom:2px solid var(--purple)}.brand{font-size:14px;font-weight:700;color:var(--purple)}.tag{display:none}h1{font-size:clamp(30px,4.7vw,47px);line-height:1.13;letter-spacing:-1px;max-width:800px;margin:32px 0 14px}h2{font-size:24px;line-height:1.25;margin:8px 0 12px}.intro{color:var(--muted);max-width:700px;margin:0 0 26px}.top{margin-bottom:26px}.setup{display:grid;grid-template-columns:1fr auto;gap:10px 16px;align-items:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0}.setup .eyebrow{grid-column:1/-1}.setup .empty{display:none}select{width:100%;background:white;color:#24212a;border:1px solid #bdb9c5;border-radius:4px;padding:11px;min-width:0}.primary{background:var(--purple);color:white;font-weight:700;border:1px solid var(--purple);padding:11px 24px;border-radius:4px}.grid{display:grid;grid-template-columns:minmax(0,1fr) 275px;gap:26px;align-items:start}.board{background:white;border:1px solid var(--line);border-radius:5px;overflow:hidden}.score{display:flex;align-items:center;justify-content:space-around;padding:22px 12px;text-align:center;gap:12px}.team{font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--muted)}.num{font-size:44px;font-weight:700;line-height:1.2;font-variant-numeric:tabular-nums}.clock{font-size:23px;font-variant-numeric:tabular-nums}.clock small{font-size:10px;color:var(--muted);display:block;margin-bottom:5px}.status{display:flex;justify-content:space-between;gap:10px;background:#f2f0f5;padding:11px 16px;font-size:12px;color:#51495e}.field{display:none}.decision{padding:25px 0;margin-top:5px}.eyebrow{color:var(--muted);font-size:12px;font-weight:700}.desc{color:#5c5762;line-height:1.6}.choices{display:grid;gap:10px;margin-top:20px}.choice{background:white;border:1px solid #d7d3dd;color:#24212a;border-radius:4px;text-align:left;padding:15px 17px;width:100%}.choice:hover{border-color:var(--purple);background:#f4f1f8}.choice b{display:block;font-size:16px;margin-bottom:4px}.choice small{color:#67616f;line-height:1.5;display:block;font-size:13px}.letter{display:none}.side{border-left:1px solid var(--line);padding-left:24px}.side>.eyebrow{display:none}.side h2{font-size:19px;margin-top:0}.log{max-height:600px;overflow:auto}.entry{border-top:1px solid var(--line);padding:14px 0;font-size:13px;line-height:1.6}.entry small{color:#77717f;font-size:11px}.entry p{margin:6px 0}.empty{color:#77717f;font-size:13px;line-height:1.7}.note{font-size:11px;color:#87818e;line-height:1.6;margin:15px 0 25px;padding-top:16px;border-top:1px solid var(--line)}.pill{display:block;font-size:12px;color:var(--purple);margin:8px 0 18px}.feedback{background:#f0edf5;border-left:3px solid var(--purple);padding:14px 16px;line-height:1.6;margin:0 0 22px;font-size:14px}.secondary{border:1px solid #bdb9c5;color:var(--purple);background:white;padding:11px 18px;border-radius:4px;margin:10px 0 0 10px}button{touch-action:manipulation}@media(max-width:720px){.wrap{padding:18px}.grid{grid-template-columns:1fr;gap:5px}.side{border-left:0;border-top:1px solid var(--line);padding:22px 0}.setup{grid-template-columns:1fr}.setup .primary{width:100%}.score{padding:18px 10px}.num{font-size:39px}.clock{font-size:21px}.secondary{display:block;margin-left:0}.status{font-size:11px}.decision{padding-top:20px}.log{max-height:350px}}
+/* Ravens colors, with the simpler layout. */
+body{background:#f5f3f8}
+header{background:#291344;color:#fff;border-bottom:3px solid #c9aa62;padding:17px 22px;border-radius:5px 5px 0 0}
+.brand{color:#fff}
+h1{color:#2d1747}
+.setup{border-top-color:#d8cde5;border-bottom-color:#d8cde5}
+.board{border-color:#40255c;border-top:4px solid #c9aa62}
+.score{background:#30194b;color:white;padding-top:23px;padding-bottom:23px}
+.team,.clock small{color:#ded2eb}
+.clock{color:#ead29a}
+.status{background:#e9e1f1;color:#3f2857}
+.primary{background:#442366;border-color:#442366}
+.primary:hover{background:#301647}
+.choice{border-left:3px solid #82629e}
+.choice:hover{border-color:#573376;background:#eee6f5}
+.choice b{color:#38204f}
+.side h2{color:#39204f}
+.pill{background:#e9e0f2;color:#4b2a67;border-radius:4px;padding:7px 10px}
+.feedback{background:#ece3f4;border-left-color:#b79951}
+.entry small{color:#6d458c}
+.scenario-context{font-size:13px;color:#655a70;background:#eee8f4;padding:14px 17px;border-left:3px solid #b79951;margin:0 0 24px}.scenario-context strong{font-weight:600}.scenario-context a{color:#4d2870}.team{max-width:120px} 
+.field{display:flex;height:125px;position:relative;align-items:center;justify-content:space-around;margin:18px;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(10% - 1px),#ffffff35 calc(10% - 1px),#ffffff35 10%),#204c39;border:1px solid #90b99b;border-radius:4px;color:#ffffff9c;font-size:12px;overflow:hidden}
+.field:before,.field:after{position:absolute;bottom:7px;font-size:9px;font-weight:700;letter-spacing:1px;color:#e8d9b0}.field:before{content:'BALTIMORE';left:8px}.field:after{content:attr(data-opponent);right:8px}
+.ball{position:absolute;top:42px;transform:translateX(-50%);background:#ddbd72;color:#27153e;border:1px solid #f4dc9f;border-radius:16px;padding:7px 11px;font-size:12px;font-weight:700;white-space:nowrap;box-shadow:0 2px 5px #0003;transition:left .35s}
+@media(max-width:480px){.field{margin:12px;height:112px}.ball{top:34px;font-size:11px;padding:7px 9px}}
+.policy{font-size:12px;color:#71647c;line-height:1.6}.rating-line{display:inline-block;margin-top:8px;color:#4e3268}.method{border-top:1px solid #d8cde5;margin:20px 0;padding:18px 0;color:#655a70;font-size:13px}.method summary{cursor:pointer;font-weight:700;color:#442366}.adjustment{color:#6d458c;font-weight:600}.setup-actions{display:flex;gap:12px;align-items:center}.quit-link{font:inherit;font-size:15px;font-weight:600;color:#503063;background:#f2ecf7;border:1px solid #bba6cd;border-radius:4px;text-decoration:none;padding:10px 16px;min-height:44px;white-space:nowrap;cursor:pointer}.quit-link:hover{background:#e8dcf1;border-color:#77518e}.quit-link[hidden]{display:none}.decision-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}@media(max-width:720px){.setup-actions .primary{flex:1}.setup-actions{width:100%}}.simulate-rest{display:block;width:100%;margin-top:18px;padding:12px 16px;min-height:46px;font:inherit;font-weight:600;background:#e9e0f2;color:#402254;border:1px solid #9c81b3;border-radius:4px;cursor:pointer}.simulate-rest:hover{background:#dfd0ec}.sim-note{font-size:12px;color:#766780;text-align:center;margin:7px 0 0}</style></head><body><div class="wrap"><header><div class="brand">Ravens coaching simulator</div><div class="tag">THE LEAD IS YOURS. THE CALL IS TOO.</div></header><section class="top"><div><h1>Can you hold a second-half lead as the Ravens’ coach?</h1><p class="intro">Three losses. Three leads to protect. Take over at halftime against the Saints, Browns or Bengals — with the actual score and quarterback. Can you finish the job?</p></div><div class="setup"><div class="eyebrow">Starting scenario</div><select id="scenario" aria-label="Starting scenario"><option value="0">Bengals · Tyler Huntley · Ravens lead 13–0</option><option value="1">Browns · Tyler Huntley · Ravens lead 10–0</option><option value="2">Saints · Lamar Jackson · Ravens lead 14–6</option></select><div class="setup-actions"><button class="primary" id="start">Start game</button><button class="quit-link" id="quit" hidden>Quit game</button></div><p class="empty" style="margin-bottom:0">A new game each time. Same pressure.</p></div></section><p class="scenario-context" id="context"><strong>Real halftime situations. A different ending is up to you.</strong><br>Baltimore led Cincinnati 13–0, Cleveland 10–0 and New Orleans 14–6 at halftime. Choose a game to take over.</p><main class="grid"><div><div class="board"><div class="score"><div><div class="team">BALTIMORE</div><div class="num" id="bal">13</div></div><div class="clock"><small id="quarter">3RD QUARTER</small><span id="time">15:00</span></div><div><div class="team" id="opponent">Cincinnati Bengals</div><div class="num" id="opp">0</div></div></div><div class="status"><span id="possession">BENGALS TO RECEIVE</span><span id="situation">Second-half kickoff</span></div><div class="field" data-opponent="BENGALS" role="img" aria-label="Football field showing possession and ball position"><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>40</span><span>30</span><span>20</span><span>10</span><div class="ball" id="ball" style="left:65%">← CIN</div></div></div><section class="decision" id="decision" aria-live="polite"></section><p class="note">Starting situations match the 2026 games. All subsequent plays are simulated. Independent fan game; not affiliated with the Ravens or NFL.</p></div><aside class="side"><div class="eyebrow">Game updates</div><h2>Game log</h2><span class="pill" id="qb">QB · Tyler Huntley</span><div class="log" id="log"><p class="empty">Your decisions and the results will appear here.</p></div></aside></main><details class="method"><summary>How the simulation works</summary><p>Make offensive and defensive calls through the second half. Each call covers up to three snaps and pauses after a first down or possession change. Routine punts happen automatically; you choose on meaningful fourth downs. There is no decision limit. Use “Simulate the rest of the game” whenever you want automatic play-calling to finish from your current situation.</p><p>Opponent profiles use Sharp Football Analysis’s Week 7 efficiency rankings, captured Oct. 25, 2026. They blend success rate and EPA and adjust for opponents. They are not DVOA. This current snapshot applies to all three historical starting situations.</p><p>Passing, rushing, pass protection and explosive-play rankings change completion, sack, turnover and yardage probabilities. Repeating a specialized approach three times in your recent calls triggers a capped opponent adjustment. Mixed offense and mixed coverage remain flexible.</p><p>The probability mappings are designed for this game, not fitted NFL win probabilities. Two-point tries, field goals, timeouts, onside kicks and hurry-up decisions depend on the game situation. Ties end the challenge after regulation.</p></details></div><script>
+/* Gameplay ratings: Sharp Football Analysis, Week 7 matchup rankings,
+ * retrieved 2026-10-25. Source: https://www.sharpfootballanalysis.com/analysis/nfl-matchups/
+ * Rankings are a blended, opponent-adjusted EPA/success-rate measure, NOT DVOA.
+ * Rank-to-probability mappings and adaptation penalties below are game design.
+ * This snapshot is used for all scenarios; it is not a historical pregame rating.
+ */
+(function(root){
+'use strict';
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+const count=(n,word)=>`${n} ${word}${n===1?'':'s'}`;
+const ratings={
+ Ravens:{off:7,def:8,passOff:8,runOff:9,protection:27,explosiveOff:2,passDef:11,runDef:9,pressure:23,explosiveDef:11},
+ Bengals:{off:10,def:25,passOff:12,runOff:10,protection:2,explosiveOff:15,passDef:25,runDef:22,pressure:6,explosiveDef:32},
+ Browns:{off:30,def:5,passOff:26,runOff:31,protection:32,explosiveOff:31,passDef:4,runDef:12,pressure:4,explosiveDef:22},
+ Saints:{off:23,def:30,passOff:21,runOff:22,protection:20,explosiveOff:27,passDef:26,runDef:32,pressure:27,explosiveDef:27}
+};
+const scenarios=[
+ {opponent:'Bengals',full:'Cincinnati Bengals',abbr:'CIN',qb:'Tyler Huntley',b:13,o:0,context:'Oct. 25: Baltimore led Cincinnati 13–0 at halftime and lost 35–13.',scout:'Cincinnati can sustain drives and protect its quarterback. Its defense gives you more chances for big plays.'},
+ {opponent:'Browns',full:'Cleveland Browns',abbr:'CLE',qb:'Tyler Huntley',b:10,o:0,context:'Oct. 18: Baltimore led Cleveland 10–0 at halftime and lost 13–10.',scout:'Cleveland’s defense makes points harder to earn. Its offense is less efficient and more vulnerable to pressure.'},
+ {opponent:'Saints',full:'New Orleans Saints',abbr:'NO',qb:'Lamar Jackson',b:14,o:6,context:'Sept. 20: Baltimore led New Orleans 14–6 at halftime and lost 24–17.',scout:'New Orleans has a below-average offense and a struggling defense. You have Lamar Jackson, but only an eight-point cushion.'}
+];
+function newGame(i){return {...scenarios[i],t:1800,x:65,off:false,down:1,need:10,bt:3,ot:3,kickoff:true,decisions:0,plays:0,history:[],calls:{off:[],def:[]},offPolicy:'mix',defPolicy:'balanced',adaptations:0}}
+function field(s){return s.x===50?'midfield':s.x<50?`BAL ${s.x}`:`${s.abbr} ${100-s.x}`}
+function stamp(s){const v=s.t>900?s.t-900:s.t;return `${s.t>900?'3rd':'4th'} ${Math.floor(v/60)}:${String(v%60).padStart(2,'0')}`}
+function newDowns(s){s.down=1;s.need=Math.min(10,s.off?100-s.x:s.x)}
+function turn(s,x){s.off=!s.off;s.x=clamp(x,1,99);newDowns(s)}
+function conversionChoice(own,other,time){const deficit=other-own,lead=own-other;if(time===0){if(deficit>2||lead>0)return 'none';return deficit===2?'two':'pat'}if(time<=900&&([2,5,8,10,13,16,18].includes(deficit)||[1,5,12].includes(lead)))return 'two';if(time<=300&&[4,11].includes(lead))return 'two';return 'pat'}
+function repeatLevel(s,side,action){if(action==='mix'||action==='balanced')return 0;const history=s.calls[side].slice(-3);return Math.min(2,Math.max(0,history.filter(x=>x===action).length-1))}
+function probabilities(s,action){
+ const O=s.off?ratings.Ravens:ratings[s.opponent],D=s.off?ratings[s.opponent]:ratings.Ravens;
+ const repeat=repeatLevel(s,s.off?'off':'def',action),qb=s.off?(s.qb==='Lamar Jackson'?.035:-.045):0;
+ const passEdge=(D.passDef-O.passOff)/31,runEdge=(D.runDef-O.runOff)/31,pressureEdge=(O.protection-D.pressure)/31,explosiveEdge=(D.explosiveDef-O.explosiveOff)/31;
+ const deep=action==='deep',pressure=!s.off&&action==='pressure',shell=!s.off&&action==='shell';
+ return {
+  repeat,
+  completion:clamp((deep?.48:.68)+qb+passEdge*.10+(shell?.09:0)-(pressure?.045:0)+(s.off?-repeat*.045:repeat*.035),.28,.88),
+  sack:clamp(.055+pressureEdge*.055+(deep?.025:0)+(pressure?.045:0)+(s.off?repeat*.012:-repeat*.008),.018,.19),
+  interception:clamp((deep?.032:.014)-passEdge*.006+(pressure?.012:0)+(shell?-.004:0)+(s.off?repeat*.006:-repeat*.003),.006,.07),
+  runStuff:clamp(.21-runEdge*.10+(s.off?repeat*.08:0)+(pressure?.06:0)-(shell?.07:0),.08,.48),
+  runBonus:runEdge*1.4+(s.off?-repeat*.8:repeat*.5)+(shell?1.0:0),
+  explosive:clamp((deep?.28:.10)+explosiveEdge*.065+(pressure?.08:0)-(shell?.075:0)+(s.off?-repeat*.025:repeat*.025),.015,.42)
+ }
+}
+function fgChance(s,off=s.off){const distance=off?117-s.x:17+s.x;return clamp(.99-Math.max(0,distance-33)*.023,.10,.98)}
+function goChance(s){return clamp(.78-s.need*.065+(s.qb==='Lamar Jackson'?.045:0)+(ratings[s.opponent].def-16.5)*.003,.13,.86)}
+function fourthChoice(s){const deficit=s.off?s.o-s.b:s.b-s.o,distance=s.off?117-s.x:17+s.x,short=s.need<=2,progress=s.off?s.x:100-s.x;if(deficit>3&&(s.t<=120||deficit<=8&&s.t<=240))return 'go';if(distance<=58&&((deficit>=1&&deficit<=3)||deficit>=9&&deficit<=11&&s.t>120||deficit<=0))return 'fg';if(s.t<=300&&deficit>0)return 'go';if(progress>=45&&short)return 'go';if(distance<=52&&deficit>0)return 'fg';return 'punt'}
+function canKneel(s){return s.off&&s.b>s.o&&s.ot===0&&s.t<=(4-s.down)*40}
+function meaningfulFourthDown(s){return s.off&&s.down===4&&(s.x>=58||(s.need<=2&&s.x>=35)||(s.o>s.b&&s.t<=300))}
+function playResult(y,incomplete){return incomplete?'Incomplete. The clock stops.':y===0?'No gain.':y<0?`Loss of ${count(-y,'yard')}.`:`Gain of ${count(y,'yard')}.`}
+function options(s){
+ if(canKneel(s))return [['kneel','Take a knee','Run out the clock and secure the win.']];
+ if(s.off&&s.down===4)return [['go','Go for it',`${Math.round(goChance(s)*100)}% conversion chance. Failure gives up the ball here.`],['punt','Punt','Make the opponent drive farther.'],...(s.x>=58?[['fg','Kick a field goal',`${117-s.x}-yard attempt. ${Math.round(fgChance(s)*100)}% chance.`]]:[])];
+ if(s.off)return [['mix','Mix runs and passes','Keep the defense guessing. Balance first downs with time off the clock.'],['run','Lean on Derrick Henry','Burn time and limit risk. Repeated run-heavy calls invite a loaded box.'],['quick','Use quick passes','Get the ball out early. Repeated short throws invite tighter coverage.'],['deep','Attack downfield','Look for a big play, with more sack and interception risk.'],['qb','Use the quarterback’s legs',s.qb==='Lamar Jackson'?'Use Jackson’s rushing threat. Repetition helps defenders contain him.':'Use Huntley’s mobility. Repetition helps defenders contain him.']];
+ return [['balanced','Rush four, mix coverage','Balance pressure with protection against big plays.'],['pressure','Bring pressure','Chase sacks and turnovers. Repeated blitzes invite quick throws.'],['shell','Keep everything in front','Limit explosives. Repeated soft coverage allows easier short gains.']]
+}
+function decide(s,action,rng=Math.random){
+ if(s.t<=0)return null;
+ const available=options(s);if(!available.some(x=>x[0]===action))throw Error('Unavailable decision');
+ const start=stamp(s),side=s.off?'off':'def',label=available.find(x=>x[0]===action)[1],events=[];
+ const ri=(a,b)=>Math.floor(a+rng()*(b-a+1));const clock=n=>s.t=Math.max(0,s.t-n);
+ const notes=[];let gains=0,snaps=0;
+ s.decisions++;
+ const initialOff=s.off,initialPlays=s.plays;
+ const strategic=!['go','punt','fg','kneel'].includes(action);
+ if(strategic){s.calls[side].push(action);if(side==='off')s.offPolicy=action;else s.defPolicy=action;
+ const r=repeatLevel(s,side,action);if(r){s.adaptations++;notes.push(side==='off'?(action==='run'?'The defense crowds the line against your run-heavy approach.':action==='qb'?'The defense assigns a spy to contain your quarterback.':action==='quick'?'The defense tightens its coverage on short routes.':'The defense backs off to protect against your deep passes.'):(action==='pressure'?`The ${s.opponent} adjust with quicker throws.`:action==='shell'?`The ${s.opponent} take the underneath space you keep conceding.`:`The ${s.opponent} recognize your coverage looks.`))}}
+ function scoreTD(off){if(off)s.b+=6;else s.o+=6;const team=off?'The Ravens':`The ${s.opponent}`,c=conversionChoice(off?s.b:s.o,off?s.o:s.b,s.t);let text=`Touchdown ${off?'Baltimore':s.opponent}. `;if(c==='two'){const good=rng()<.48;if(good){if(off)s.b+=2;else s.o+=2}text+=`${team} go for two. ${good?'The conversion is good.':'The attempt fails.'}`}else if(c==='pat'){const good=rng()<.95;if(good){if(off)s.b++;else s.o++}text+=`${team} ${good?'kick the extra point.':'miss the extra point.'}`}else text+='No conversion is needed with time expired.';
+ turn(s,off?75:25);events.push(text);
+ if(s.t>0&&s.t<=150&&(off?s.b<s.o:s.o<s.b)){const recover=rng()<.08;if(recover)turn(s,off?45:55);else{s.x=off?55:45;newDowns(s)}events.push(`${team} try an onside kick. ${recover?'They recover.':(off?'The '+s.opponent:'The Ravens')+' recover.'}`)}
+ }
+ function special(a,manual=false){const off=s.off,team=off?'Baltimore':`The ${s.opponent}`,old=s.x;if(a==='kneel'){clock(s.t);events.push('Baltimore takes a knee and runs out the clock.');return}
+ if(a==='fg'){const distance=off?117-old:17+old,good=rng()<fgChance(s);clock(5);if(good){if(off)s.b+=3;else s.o+=3}turn(s,good?(off?75:25):(off?Math.max(20,old-7):Math.min(80,old+7)));events.push(`${team} ${off?(good?'makes':'misses'):(good?'make':'miss')} a ${distance}-yard field goal.`);return}
+ if(a==='punt'){const end=off?old+ri(36,49):old-ri(36,49);turn(s,off?(end>=100?80:end):(end<=0?20:end));clock(10);events.push(`${team} ${off?'punts':'punt'}. ${s.off?'Baltimore takes':'The '+s.opponent+' take'} over at ${field(s)}.`);return}
+ if(a==='go'&&manual){const good=rng()<goChance(s);clock(ri(5,10));s.plays++;snaps++;if(!good){turn(s,old);events.push('Baltimore is stopped on fourth down.');return}s.x+=s.need+ri(0,5);if(s.x>=100)scoreTD(true);else{newDowns(s);events.push('Baltimore converts on fourth down.')}return}
+ }
+ if(!strategic)special(action,true);
+ let safety=0;
+ while(strategic&&s.t>0&&s.plays-initialPlays<3&&safety++<1000){
+  if(s.off!==initialOff)break;
+  if(canKneel(s)){special('kneel');break}
+  // A final-seconds field goal can win or tie without waiting for fourth down.
+  const deficit=s.off?s.o-s.b:s.b-s.o,distance=s.off?117-s.x:17+s.x;
+  if(s.t<=25&&deficit>=0&&deficit<=3&&distance<=58){special('fg');break}
+  // Only interrupt play for a genuine fourth-down choice.
+  if(s.off&&s.down===4){if(meaningfulFourthDown(s))break;special('punt');break}
+  if(!s.off&&s.down===4){const a=fourthChoice(s);if(a!=='go'){special(a);break}events.push(`The ${s.opponent} go for it on fourth-and-${s.need}.`)}
+  if(s.kickoff){s.kickoff=false;s.x=100-ri(20,35);clock(6);events.push(`The ${s.opponent} return the kickoff to their ${100-s.x}.`)}
+  const off=s.off,policy=off?s.offPolicy:s.defPolicy,own=off?s.b:s.o,other=off?s.o:s.b;
+  let a=policy;if(off&&policy==='mix'){const u=rng();a=u<.48?'run':u<.86?'quick':u<.95?'deep':'qb'}
+  // A run-heavy approach still permits a pass on an obvious passing down.
+  if(off&&a==='run'&&s.down>=3&&s.need>=7)a='quick';
+  const p=probabilities(s,off?a:policy),pass=off?['quick','deep'].includes(a):rng()<(s.t<=300&&own<other?.88:.63);
+  let y=0,incomplete=false,turnover=false;
+  if(pass){turnover=rng()<p.interception;if(!turnover){if(rng()<p.sack)y=-ri(4,10);else if(rng()>=p.completion)incomplete=true;else{y=rng()<p.explosive?ri(18,a==='deep'?42:32):ri(a==='deep'?8:3,a==='deep'?19:12)}}}
+  else{turnover=rng()<(off&&a==='qb'?.02:.009);if(!turnover){if(rng()<p.runStuff)y=ri(-3,1);else if(rng()<p.explosive)y=ri(11,off&&a==='qb'&&s.qb==='Lamar Jackson'?32:22);else y=Math.round(ri(2,7)+p.runBonus+(off&&a==='qb'&&s.qb==='Lamar Jackson'?1:0))}}
+  let elapsed=incomplete?ri(5,9):ri(28,42);
+  if(s.t<=300&&own<=other)elapsed=incomplete?ri(5,9):ri(12,22);
+  if(!incomplete&&own>other&&s.t<=180){const key=off?'ot':'bt';if(s[key]>0){s[key]--;elapsed=ri(5,9);events.push(`${off?'The '+s.opponent:'The Ravens'} use a timeout.`)}}
+  if(!incomplete&&own<=other&&s.t<=120){const key=off?'bt':'ot';if(s[key]>0){s[key]--;elapsed=ri(5,9);events.push(`${off?'The Ravens':'The '+s.opponent} use a timeout.`)}}
+  clock(elapsed);s.plays++;snaps++;
+  if(turnover){turn(s,s.x);events.push(off?'Baltimore turns the ball over.':`Takeaway! Baltimore ends the ${s.opponent} drive.`);break}
+  events.push(playResult(y,incomplete));if(!incomplete){s.x+=off?y:-y;gains+=y}
+  if(off&&s.x<=0||!off&&s.x>=100){if(off)s.o+=2;else s.b+=2;turn(s,off?65:35);events.push(`Safety. Two points for ${off?s.opponent:'Baltimore'}.`);break}
+  if(off&&s.x>=100||!off&&s.x<=0){scoreTD(off);break}
+  if(y>=s.need&&!incomplete){newDowns(s);events.push('First down.');break}else{s.need-=incomplete?0:y;s.down++;if(s.down>4){turn(s,s.x);events.push(`${off?'Baltimore':'The '+s.opponent} ${off?'is':'are'} stopped on fourth down.`)}}
+ }
+ // Resolve a routine fourth-down punt before asking for the next call.
+ if(s.t>0&&s.off&&s.down===4&&!meaningfulFourthDown(s)&&!canKneel(s)){special('punt')}
+ else if(s.t>0&&!s.off&&s.down===4){const next=fourthChoice(s);if(next!=='go')special(next)}
+ if(safety>=1000)throw Error('Simulation did not progress');
+ const summary=`${snaps?count(snaps,'play')+' simulated. ':''}${events.join(' ')}${s.t>0?' '+(s.off?'Baltimore has':'The '+s.opponent+' have')+' the ball at '+field(s)+'.':''}`;
+ const record={number:s.decisions,call:label,start,end:stamp(s),notes,events,summary,score:`Baltimore ${s.b}, ${s.opponent} ${s.o}`};s.history.push(record);return record;
+}
+function simulateRest(s,rng=Math.random){
+ const records=[],manualDecisions=s.decisions;
+ let guard=0;
+ while(s.t>0&&guard++<400){
+  let action;
+  if(canKneel(s))action='kneel';
+  else if(s.off&&s.down===4)action=fourthChoice(s);
+  else if(s.off){
+   action=s.b>s.o&&s.t<=240?'run':'mix';
+   if(action==='run'&&repeatLevel(s,'off','run')>0)action='mix';
+  }else action=s.b-s.o>8&&s.t<=120&&repeatLevel(s,'def','shell')===0?'shell':'balanced';
+  if(!options(s).some(o=>o[0]===action))action='punt';
+  const before=s.t,r=decide(s,action,rng);
+  if(s.t>=before)throw Error('Automatic play did not advance the clock');
+  r.automatic=true;r.number=null;records.push(r);
+  s.decisions=manualDecisions;s.autoCalls=(s.autoCalls||0)+1;
+ }
+ if(s.t>0)throw Error('Automatic play did not finish');
+ return records;
+}
+const api={ratings,scenarios,newGame,field,stamp,count,conversionChoice,repeatLevel,probabilities,fgChance,goChance,fourthChoice,canKneel,meaningfulFourthDown,playResult,options,decide,simulateRest};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Football=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
+
+</script><script>
+'use strict';
+const F=Football,$=id=>document.getElementById(id);
+let game=null,busy=false;
+function loadStats(){try{const v=JSON.parse(localStorage.getItem('holdLeadStats-v3')||'null');return v&&Number.isInteger(v.games)&&Number.isInteger(v.wins)?v:{games:0,wins:0}}catch{return {games:0,wins:0}}}
+function clearLog(){$('log').innerHTML='<p class="empty">Your decisions and the results will appear here.</p>'}
+function begin(){game=F.newGame(+$('scenario').value);$('log').innerHTML='';render()}
+function quit(){game=null;busy=false;clearLog();render()}
+function render(){
+ const s=game||F.newGame(+$('scenario').value),r=F.ratings[s.opponent];$('start').textContent=game?'Restart game':'Start game';$('quit').hidden=!game||!game.t;
+ $('bal').textContent=s.b;$('opp').textContent=s.o;$('opponent').textContent=s.full;$('qb').textContent=`QB · ${s.qb}`;
+ const sec=s.t>900?s.t-900:s.t;$('quarter').textContent=s.t?(s.t>900?'3RD QUARTER':'4TH QUARTER'):'FINAL';$('time').textContent=`${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`;
+ $('possession').textContent=!s.t?'GAME OVER':s.kickoff?`${s.opponent.toUpperCase()} TO RECEIVE`:s.off?'BALTIMORE BALL':`${s.opponent.toUpperCase()} BALL`;
+ $('situation').textContent=!s.t?(s.b>s.o?'LEAD PROTECTED':s.b===s.o?'REGULATION TIE':'LEAD LOST'):s.kickoff?'Second-half kickoff':`${['','1st','2nd','3rd','4th'][s.down]} & ${s.need} · ${F.field(s)}`;
+ const field=document.querySelector('.field');field.dataset.opponent=s.opponent.toUpperCase();field.setAttribute('aria-label',s.kickoff?`Second-half kickoff to ${s.opponent}`:`${s.off?'Baltimore':s.opponent} ball at ${F.field(s)}`);$('ball').style.left=Math.max(8,Math.min(92,s.x))+'%';$('ball').textContent=s.off?'BAL →':`← ${s.abbr}`;
+ $('context').innerHTML=`<strong>${s.context}</strong><br>${s.scout}<br><span class="rating-line">Opponent efficiency: offense No. ${r.off} · defense No. ${r.def}. Lower ranks are better.</span>`;
+ if(!game){$('decision').innerHTML='<div class="eyebrow">How to play</div><h2>Take control of the second half.</h2><p class="desc">Start at halftime with the real score and quarterback. Call the offense and defense through short stretches of play. You get another decision after a first down, a change of possession or up to three snaps.</p><p class="desc">Routine punts happen automatically. You decide the fourth downs where going for it or kicking is a reasonable option. Opponents adjust to repeated calls.</p>';return}
+ if(!s.t){finish();return}
+ const fourth=s.off&&s.down===4,kneel=F.canKneel(s);
+ const title=kneel?'Finish the game.':fourth?`Fourth-and-${s.need}. Your call.`:s.off?'Choose your offensive approach.':'Choose your defensive approach.';
+ const desc=fourth?`Ball at ${F.field(s)}. Keep the drive going, take the points or play for field position.`:s.kickoff?`The ${s.opponent} receive the kickoff. Set your defense for the opening stretch.`:'Your call covers up to three snaps. Play pauses for a first down, a change of possession or a meaningful fourth-down decision.';
+ const last=s.history.at(-1);
+ $('decision').innerHTML=`${last?`<div class="feedback"><strong>${last.score}</strong><br>${last.notes.join(' ')} ${last.summary}</div>`:''}<div class="decision-heading"><div class="eyebrow">Decision ${s.decisions+1} · ${s.off?'Offense':'Defense'}</div><button class="quit-link" id="quit-inline">Quit game</button></div><h2>${title}</h2><p class="desc">${desc}</p><div class="choices">${F.options(s).map(o=>`<button class="choice" data-action="${o[0]}"><b>${o[1]}</b><small>${o[2]}</small></button>`).join('')}</div><button class="simulate-rest" id="simulate-rest">Simulate the rest of the game</button><p class="sim-note">Finish from here with automatic play-calling and clock management.</p>`;
+ document.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>choose(b.dataset.action));$('quit-inline').onclick=quit;$('simulate-rest').onclick=simulateRest;
+}
+function policyName(p){return {mix:'mixed runs and passes',run:'Henry-led rushing',quick:'quick passes',deep:'downfield passing',qb:'quarterback runs',balanced:'mixed coverage',pressure:'pressure',shell:'deep coverage'}[p]}
+function appendLog(r){$('log').insertAdjacentHTML('afterbegin',`<div class="entry"><small>${r.automatic?'AUTOMATIC PLAY':`DECISION ${r.number}`} · ${r.start} → ${r.end}</small><p><strong>${r.call}</strong></p>${r.notes.length?`<p class="adjustment">${r.notes.join(' ')}</p>`:''}<p>${r.summary}</p><p><strong>${r.score}</strong></p></div>`)}
+function choose(action){if(busy||!game||!game.t)return;busy=true;try{appendLog(F.decide(game,action));render()}finally{busy=false}}
+function simulateRest(){if(busy||!game||!game.t)return;busy=true;try{F.simulateRest(game).forEach(appendLog);render()}finally{busy=false}}
+
+function finish(){const s=game,win=s.b>s.o,tie=s.b===s.o;let stats=loadStats();if(!s.recorded){stats.games++;if(win)stats.wins++;try{localStorage.setItem('holdLeadStats-v3',JSON.stringify(stats))}catch{}s.recorded=true}
+ const key=s.history.filter(r=>r.events.some(e=>/Touchdown|turnover|turns the ball over|fourth down|field goal|Takeaway|onside/i.test(e))).slice(-3);
+ $('decision').innerHTML=`<div class="eyebrow">Final score</div><h2>${win?'You held the lead.':tie?'Tied after regulation.':'The lead slipped away.'}</h2><p class="desc">Baltimore ${s.b}, ${s.opponent} ${s.o}.${tie?' This challenge ends after regulation. A tie does not count as protecting the lead.':''}</p><div class="feedback">${F.count(s.decisions,'coaching decision')}${s.autoCalls?' · Rest of game simulated':''} · ${F.count(s.plays,'simulated play')}<br>${F.count(stats.wins,'lead')} protected in ${F.count(stats.games,'game')} with this version.</div><div class="eyebrow">Key stretches</div>${key.map(r=>`<p class="desc"><strong>${r.automatic?'Automatic play':`Decision ${r.number}`}: ${r.call}.</strong> ${r.events.filter(e=>/Touchdown|turnover|turns the ball over|fourth down|field goal|Takeaway|onside/i.test(e)).join(' ')}</p>`).join('')}<button class="primary" id="again">Play again</button><button class="secondary" id="copy">Copy your result</button>`;
+ $('again').onclick=begin;$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(`Ravens coaching simulator: Baltimore ${s.b}, ${s.opponent} ${s.o}. ${s.qb} at QB. ${win?'Lead protected.':'Can you do better?'} ${location.href}`);$('copy').textContent='Result copied'}catch{$('copy').textContent='Copy unavailable in this browser'}};
+}
+$('start').onclick=begin;$('quit').onclick=quit;$('scenario').onchange=()=>{if(game)begin();else render()};render();
+
+</script></body></html>
