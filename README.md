@@ -35,3 +35,9 @@ Team profiles use a fixed Sharp Football Analysis Week 7 efficiency-ranking snap
 The starting score, quarterback and receiving team are historical. Subsequent plays and kickoff returns are simulated. Games end after regulation; ties do not count as protecting the lead. Local records belong to the browser and website origin, so records from the private preview do not transfer to GitHub Pages.
 
 Independent fan game; not affiliated with the Ravens or NFL.
+
+## Compact layout update
+
+The scoreboard, field and play choices are closer together. The game log, scenario details and last-series recap expand on demand. Gameplay is unchanged.
+
+To update the live game, replace index.html in the root of bconlin-coder/Ravens-Second-Half and commit. The existing WordPress iframe will load the new game after GitHub Pages deploys. A height of 850 is a useful starting point; opening details or playing on a smaller screen may require scrolling.
